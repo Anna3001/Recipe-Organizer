@@ -3,6 +3,8 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  protect_from_forgery with: :exception
+
   def destroy
       @user = current_user
       @user.destroy

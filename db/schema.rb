@@ -10,7 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_10_194007) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_11_135000) do
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "dinners", force: :cascade do |t|
+    t.string "name"
+    t.text "recipes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "recipe_dinners", force: :cascade do |t|
+    t.integer "recipe_id", null: false
+    t.integer "dinner_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dinner_id"], name: "index_recipe_dinners_on_dinner_id"
+    t.index ["recipe_id"], name: "index_recipe_dinners_on_recipe_id"
+  end
+
+  create_table "recipes", force: :cascade do |t|
+    t.string "name"
+    t.text "ingredients"
+    t.text "instructions"
+    t.boolean "public"
+    t.integer "category_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_recipes_on_category_id"
+    t.index ["user_id"], name: "index_recipes_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -23,4 +58,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_10_194007) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "recipe_dinners", "dinners"
+  add_foreign_key "recipe_dinners", "recipes"
+  add_foreign_key "recipes", "categories"
+  add_foreign_key "recipes", "users"
 end
