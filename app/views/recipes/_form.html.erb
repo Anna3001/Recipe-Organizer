@@ -1,0 +1,59 @@
+<div class="bg-gray-100 p-10">
+    <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <% if @recipe.new_record? %>
+          <h1 class="text-2xl font-semibold mb-6">Create a new recipe</h1>
+        <% else %>
+          <h1 class="text-2xl font-semibold mb-6">Update a recipe</h1>
+        <% end %>
+
+        <%= form_with(model: recipe) do |form| %>
+          <% if recipe.errors.any? %>
+            <div style="color: red">
+              <h2><%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+
+              <ul>
+                <% recipe.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="mb-6">
+            <%= form.label :name, class: "block text-sm font-medium mb-2 text-gray-600" %>
+            <%= form.text_field :name, class: "w-full h-10 px-4 py-2 border rounded-lg", placeholder: "Enter the recipe name", required: true %>
+          </div>
+
+          <div class="mb-6">
+            <%= form.label :category_id, class: "block text-sm font-medium mb-2 text-gray-600" %>
+            <%= form.number_field :category_id, class: "w-full h-10 px-4 py-2 border rounded-lg", placeholder: "Enter the category", required: true %>
+          </div>
+
+          <div class="mb-6">
+            <%= form.label :ingredients, class: "block text-sm font-medium mb-2 text-gray-600" %>
+            <%= form.text_area :ingredients, class: "w-full min-h-[100px] px-4 py-2 border rounded-lg h-auto", placeholder: "Enter the ingredients", required: true %>
+          </div>
+
+          <div class="mb-6">
+            <%= form.label :instructions, class: "block text-sm font-medium mb-2 text-gray-600" %>
+            <%= form.text_area :instructions, class: "w-full min-h-[250px] px-4 py-2 border rounded-lg h-auto", placeholder: "Enter the instructions", required: true %>
+          </div>
+
+          <div class="mb-6">
+            <%= form.label :public, class: "flex items-center mt-2" do %>
+              <%= form.check_box :public, class: "form-checkbox text-indigo-600" %>
+              <span class="ml-2 text-gray-700">Share this recipe publicly</span>
+            <% end %>
+          </div>
+
+          <div class="mb-6">
+            <%= form.hidden_field :user_id, value: recipe.user_id %>
+          </div>
+
+          <div class="text-center">
+            <%= form.submit class: "px-4 py-2 bg-red-300 text-black rounded-lg hover:bg-red-400" %>
+          </div>
+        <% end %>
+    </div>
+</div>
+

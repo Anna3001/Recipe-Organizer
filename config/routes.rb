@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :categories
+  get 'recipies/new'
+  get 'recipies/create'
+  get 'recipies/edit'
+  get 'recipies/update'
+  get 'recipies/destroy'
   devise_for :users
   
   authenticated :user do
