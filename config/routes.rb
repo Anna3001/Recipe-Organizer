@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :dinners
   resources :categories
   get 'recipies/new'
   get 'recipies/create'
