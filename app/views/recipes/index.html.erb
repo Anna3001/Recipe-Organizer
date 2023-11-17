@@ -1,15 +1,24 @@
-<p style="color: green"><%= notice %></p>
+<%= render partial: 'shared/navbar' %>
 
-<h1>Recipes</h1>
+<div class="bg-gray-100 h-screen">  
+  <div class="px-16 max-w-4xl mx-auto h-screen py-6 bg-white shadow-lg">
+    <div>
+      <button class="px-4 py-2 bg-red-300 text-black rounded-lg hover:bg-red-400"><%= link_to "New recipe", new_recipe_path %></button>
+    </div>
+    <div class="mt-8 mb-8 grid lg:grid-cols-3 md:grid-cols-3 gap-10 font-[Poppins]">  
 
-<div id="recipes">
-  <% @recipes.each do |recipe| %>
-    <%= render recipe %>
-    <p>
-      <%= recipe.id %>
-      <%= link_to "Show this recipe", recipe %>
-    </p>
-  <% end %>
+      <% @recipes.each do |recipe| %>
+        <%= link_to recipe_path(recipe) do %>
+        <div class="bg-white rounded-xl shadow-2xl overflow-hidden">
+          <img src="https://images.pexels.com/photos/1247677/pexels-photo-1247677.jpeg?auto=compress&cs=tinysrgb&w=1600" class="w-full h-32 sm:h-48 object-cover">
+          <div class="m-4">
+            <span class="font-bold">5 Bean Chilli Stew</span>
+            <span class="block text-gray-500 text-sm">Recipe by Mario</span>   
+          </div>
+        </div>
+        <% end %>
+      <% end %>
+
+    </div>
+  </div>  
 </div>
-
-<%= link_to "New recipe", new_recipe_path %>
