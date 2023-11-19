@@ -1,0 +1,23 @@
+<%= render partial: 'shared/navbar' %>
+
+<div class="bg-gray-100 h-screen">
+  <div class="px-16 max-w-4xl mx-auto h-screen py-6 bg-white shadow-lg">
+
+    <div class="flex flex-col items-center mt-12">
+      <h1 class="text-3xl font-semibold mb-12"><%= @dinner.name %></h1>
+    </div>
+
+    <!-- Form for adding recipes to the dinner -->
+    <%= form_for @dinner, url: create_recipe_dinners_dinner_path(@dinner), method: :post do |f| %>
+    <div class="mb-12">
+      <%= f.collection_select :recipe_ids, @recipes, :id, :name, { prompt: 'Select a recipe', multiple: true }, { class: ' h-10 w-full border rounded-lg' } %>
+    </div>
+
+
+      <div class="text-center">
+        <%= f.submit 'Add recipe', class: "px-4 py-2 bg-red-300 text-black rounded-lg hover:bg-red-400" %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

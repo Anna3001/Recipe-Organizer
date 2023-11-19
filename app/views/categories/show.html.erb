@@ -1,10 +1,15 @@
-<p style="color: green"><%= notice %></p>
+<%= render partial: 'shared/navbar' %>
 
-<%= render @category %>
+<div class="bg-gray-100 h-screen">  
+<div class="px-16 max-w-4xl mx-auto h-screen py-6 bg-white shadow-lg">
+  
+<div class="flex flex-col items-center mt-12">
+  <h1 class="text-3xl font-semibold mb-3"><%= @category.name %></h1>
 
-<div>
-  <%= link_to "Edit this category", edit_category_path(@category) %> |
-  <%= link_to "Back to categories", categories_path %>
+  <div class="flex">
+    <%= link_to "Edit", edit_category_path(@category), class: "text-red-300 mb-12 hover:text-red-400" %> 
+  </div>
+</div>
 
-  <%= button_to "Destroy this category", @category, method: :delete %>
+</div>
 </div>

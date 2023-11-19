@@ -1,10 +1,43 @@
-<p style="color: green"><%= notice %></p>
 
-<%= render @dinner %>
+<%= render partial: 'shared/navbar' %>
+
+<div class="bg-gray-100 h-screen">  
+<div class="px-16 max-w-4xl mx-auto h-screen py-6 bg-white shadow-lg">
+  
+<div class="flex flex-col items-center mt-12">
+  <h1 class="text-3xl font-semibold mb-3"><%= @dinner.name %></h1>
+
+  <div class="flex space-x-3">
+    <%= link_to "Edit", edit_dinner_path(@dinner), class: "text-red-300 mb-12 hover:text-red-400" %> 
+    <%= button_to "Delete", @dinner, method: :delete, class: "text-red-300 mb-12 hover:text-red-400" %>
+  </div>
+</div>
+
+<div class="flex mb-12 items-center">
+  <%= link_to add_recipe_to_dinner_dinner_path(@dinner), class: 'bg-gray-400 text-xl text-white font-bold py-2 px-4 rounded-lg mr-4' do %>
+    +
+  <% end %>
+  <p>Add recipes to this dinner</p>
+</div>
+
+
+<!-- Display all recipe names and links associated with the current Dinner -->
+    <div class="mb-6">
+      <% @dinner.recipe_dinners.each do |recipe_dinner| %>
+        <% recipe = recipe_dinner.recipe %>
+
+        <%= link_to recipe_path(recipe) do %>
+        <div class="bg-white rounded-xl mb-12 shadow-2xl overflow-hidden">
+          <img src="https://images.pexels.com/photos/1247677/pexels-photo-1247677.jpeg?auto=compress&cs=tinysrgb&w=1600" class="w-full h-32 sm:h-48 object-cover">
+          <div class="m-4">
+            <span class="font-bold"><%= recipe.name %></span>
+              <span class="block text-gray-500 text-sm"></span>  
+          </div>
+        </div>
+        <% end %>
+      <% end %>
+    </div>
 
 <div>
-  <%= link_to "Edit this dinner", edit_dinner_path(@dinner) %> |
-  <%= link_to "Back to dinners", dinners_path %>
 
-  <%= button_to "Destroy this dinner", @dinner, method: :delete %>
 </div>

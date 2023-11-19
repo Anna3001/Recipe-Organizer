@@ -1,13 +1,30 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[ show edit update destroy ]
+  skip_before_action :set_recipe, only: [:public]
 
   # GET /recipes or /recipes.json
   def index
     @recipes = Recipe.all
+    load_authors_for_recipes
   end
+
+  def public
+    @recipes = Recipe.public_recipes
+    load_authors_for_recipes
+  end
+
+  def publicRecipe
+    @recipe = Recipe.find(params[:id])
+    load_author_for_recipe if @recipe.present?
+  end  
 
   # GET /recipes/1 or /recipes/1.json
   def show
+    if @recipe.nil?
+      redirect_to public_recipes_path, alert: 'Recipe not found'
+    end
+
+    load_author_for_recipe if @recipe.present?
   end
 
   # GET /recipes/new
@@ -62,11 +79,23 @@ class RecipesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_recipe
-      @recipe = Recipe.find(params[:id])
+      if params[:id] == "public"
+        @recipes = nil
+      else  
+        @recipe = Recipe.find(params[:id])
+      end  
     end
 
     # Only allow a list of trusted parameters through.
   def recipe_params
     params.require(:recipe).permit(:name, :ingredients, :instructions, :public, :category_id, :user_id)
+  end
+
+  def load_authors_for_recipes
+    @recipe_authors = User.where(id: @recipes.pluck(:user_id)).index_by(&:id)
+  end
+
+  def load_author_for_recipe
+    @recipe_author = User.find_by(id: @recipe.user_id)
   end
 end
