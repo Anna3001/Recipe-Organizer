@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     root 'recipes#index', as: :authenticated_root
   end
 
+  get "profile", to: "profiles#index"
+
   root to: "home#index"
   get "recipes", to: "recipes#index"
   get "/", to: "home#index"

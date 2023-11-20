@@ -1,0 +1,17 @@
+<%= render partial: 'shared/navbar' %>
+
+<div class="bg-gray-100 h-screen">  
+<div class="px-16 max-w-4xl mx-auto h-screen py-6 bg-white shadow-lg">
+  
+<div class="flex flex-col items-center mb-12 mt-12">
+  <ion-icon name="person-outline" class="text-9xl text-red-300"></ion-icon>
+  <h1 class="text-3xl font-semibold mb-4">My profile</h1>
+</div>
+
+  <p class="mb-4">My e-mail: <%= @user_email %></p>
+
+    <p class="mb-32">Number of my recipes: <%= @recipe_count %></p>
+  
+      <a href="#" class="text-red-300 mb-12 hover:text-red-400">Delete my account</a>
+  </div>
+</div>
