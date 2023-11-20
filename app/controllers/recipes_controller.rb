@@ -68,6 +68,7 @@ class RecipesController < ApplicationController
 
   # DELETE /recipes/1 or /recipes/1.json
   def destroy
+    RecipeDinner.where(recipe_id: @recipe.id).destroy_all
     @recipe.destroy
 
     respond_to do |format|
@@ -88,7 +89,7 @@ class RecipesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
   def recipe_params
-    params.require(:recipe).permit(:name, :ingredients, :instructions, :public, :category_id, :user_id)
+    params.require(:recipe).permit(:name, :ingredients, :instructions, :public, :category_id, :user_id, :image)
   end
 
   def load_authors_for_recipes

@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     member do
       get 'add_recipe_to_dinner'
       post 'create_recipe_dinners'
+      delete 'destroy_recipe_dinner/:recipe_dinner_id', to: 'dinners#destroy_recipe_dinner', as: 'destroy_recipe_dinner'
+
     end
   end
 

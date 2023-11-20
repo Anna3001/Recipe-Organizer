@@ -1,14 +1,18 @@
 <%= render partial: 'shared/navbar' %>
 
-<div class="bg-gray-100 h-screen">  
-  <div class="px-16 max-w-4xl mx-auto h-screen py-6 bg-white shadow-lg">
+<div class="bg-gray-100 h-auto min-h-screen">  
+  <div class="px-16 max-w-4xl mx-auto h-auto min-h-screen py-6 bg-white shadow-lg">
     <div class="mt-8 mb-8 grid lg:grid-cols-3 md:grid-cols-3 gap-10 font-[Poppins]">  
 
       <% @recipes.each do |recipe| %>
         <%= link_to public_recipe_path(recipe) do %>
         <div class="bg-white rounded-xl shadow-2xl overflow-hidden">
+        <% if recipe.image.attached? %>
+          <%= image_tag recipe.image, class: "w-full h-32 sm:h-48 object-cover" %>
+        <% else %>  
           <img src="https://images.pexels.com/photos/1247677/pexels-photo-1247677.jpeg?auto=compress&cs=tinysrgb&w=1600" class="w-full h-32 sm:h-48 object-cover">
-          <div class="m-4">
+        <% end %>          
+        <div class="m-4">
             <span class="font-bold"><%= recipe.name %></span>
             <span class="block text-gray-500 text-sm"><%= display_author_for_recipe(recipe) %></span>   
           </div>

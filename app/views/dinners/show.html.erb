@@ -1,8 +1,8 @@
 
 <%= render partial: 'shared/navbar' %>
 
-<div class="bg-gray-100 h-screen">  
-<div class="px-16 max-w-4xl mx-auto h-screen py-6 bg-white shadow-lg">
+<div class="bg-gray-100 h-auto min-h-screen">  
+<div class="px-16 max-w-4xl mx-auto h-auto min-h-screen py-6 bg-white shadow-lg">
   
 <div class="flex flex-col items-center mt-12">
   <h1 class="text-3xl font-semibold mb-3"><%= @dinner.name %></h1>
@@ -20,23 +20,33 @@
   <p>Add recipes to this dinner</p>
 </div>
 
-
 <!-- Display all recipe names and links associated with the current Dinner -->
-    <div class="mb-6">
-      <% @dinner.recipe_dinners.each do |recipe_dinner| %>
-        <% recipe = recipe_dinner.recipe %>
+<div class="mb-6">
+  <% @dinner.recipe_dinners.each do |recipe_dinner| %>
+    <% recipe = recipe_dinner.recipe %>
 
-        <%= link_to recipe_path(recipe) do %>
-        <div class="bg-white rounded-xl mb-12 shadow-2xl overflow-hidden">
+    <div class="bg-white rounded-xl mb-12 shadow-2xl overflow-hidden">
+      <%= link_to recipe_path(recipe) do %>
+        <% if recipe.image.attached? %>
+          <%= image_tag recipe.image, class: "w-full h-32 sm:h-48 object-cover" %>
+        <% else %>  
           <img src="https://images.pexels.com/photos/1247677/pexels-photo-1247677.jpeg?auto=compress&cs=tinysrgb&w=1600" class="w-full h-32 sm:h-48 object-cover">
-          <div class="m-4">
-            <span class="font-bold"><%= recipe.name %></span>
-              <span class="block text-gray-500 text-sm"></span>  
-          </div>
-        </div>
-        <% end %>
+        <% end %>        
+        <div class="m-4 flex items-center justify-between">
+          <span class="font-bold"><%= recipe.name %></span>
+        
       <% end %>
+          <%= form_for [@dinner, recipe_dinner], url: destroy_recipe_dinner_dinner_path(@dinner, recipe_dinner), method: :delete, data: { confirm: 'Are you sure?' }, html: { class: 'inline-block' } do |f| %>
+            
+            <%= f.button type: 'submit', class: 'text-xl' do %>
+            <ion-icon name="trash-bin-outline"></ion-icon>
+          <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
+  <% end %>
+</div>
 
 <div>
 

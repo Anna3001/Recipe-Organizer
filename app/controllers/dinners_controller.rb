@@ -88,6 +88,18 @@ class DinnersController < ApplicationController
     redirect_to dinner_path(@dinner), notice: 'Recipes added to the dinner successfully.'
   end
 
+  def destroy_recipe_dinner
+    @dinner = Dinner.find(params[:id])
+    @recipe_dinner = @dinner.recipe_dinners.find(params[:recipe_dinner_id])
+  
+    if @recipe_dinner.destroy
+      redirect_to dinner_path(@dinner), notice: 'Recipe removed from the dinner successfully.'
+    else
+      redirect_to dinner_path(@dinner), alert: 'Failed to remove recipe from the dinner.'
+    end
+  end
+  
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

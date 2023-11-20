@@ -50,6 +50,11 @@
             <%= form.hidden_field :user_id, value: recipe.user_id %>
           </div>
 
+            <div class="field">
+    <%= form.label :image, "Recipe Image" %>
+    <%= form.file_field :image %>
+  </div>
+
           <div class="text-center">
             <%= form.submit class: "px-4 py-2 bg-red-300 text-black rounded-lg hover:bg-red-400" %>
           </div>
